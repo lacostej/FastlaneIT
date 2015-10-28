@@ -3,4 +3,6 @@
 # comment out if you need to experiment a bit
 #XXX=DEBUG\=true
 rm -f /tmp/spaceship*
-$XXX fastlane test_all
+
+#$XXX fastlane test_all
+$XXX fastlane meta_upload && ruby scripts/run_all.rb
