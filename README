@@ -12,6 +12,10 @@ To get started:
 
 3. sh run.sh (the first time, if you haven't entered your Apple credentials, it will ask for them and store them)
 
+Once you have ran the script once, you can either keep running it, or play with different scenarios. E.g. 
+
+ruby scripts/run_loop.rb
+
 If you want to change the screenshots have a look at 
 
    ruby bin/genimages.rb fixtures
