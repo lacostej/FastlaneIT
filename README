@@ -2,9 +2,7 @@ Test fastlane !
 
 Right now the project allows to
 
-* generate some screenshots to be used by spaceship / deliver for upload
-
-  NOTE: this requires image magick
+* set metadata with 4 languages on a projet, remove all screenshots, and upload 1, then 30, then 120 screenshots
 
 To get started:
 
@@ -14,4 +12,8 @@ To get started:
 
 3. sh run.sh (the first time, if you haven't entered your Apple credentials, it will ask for them and store them)
 
-If you 
+If you want to change the screenshots have a look at 
+
+   ruby bin/genimages.rb fixtures
+
+   (this requires ImageMagick)

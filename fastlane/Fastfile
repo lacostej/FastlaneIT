@@ -13,9 +13,9 @@ platform :ios do
 
   desc "Prepares the fixtures"
   lane :fixtures_init do
-    # prepare the fixtures data
-    Helper.log.info "Generating images"
-    sh 'ruby ../bin/genimages.rb ../fixtures'
+    Helper.log.info "Generating metadata"
+    # sh 'ruby ../bin/genimages.rb ../fixtures'
+    puts `(cd .. ; unzip -u FastlaneIT_fixtures.zip )`
     sh 'ruby ../bin/genmetadata.rb ../fixtures'
   end
 
