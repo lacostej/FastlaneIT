@@ -1,2 +1,4 @@
-fixtures/screenshots_5_5_5
-fixtures/screenshots_1_1_1
+fixtures/screenshots_*
+fixtures/metadata_*
+fastlane/report.xml
+fastlane/.env

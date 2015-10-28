@@ -1,0 +1,7 @@
+app_identifier ENV['BUNDLE_ID']
+apple_id ENV['SPACESHIP_USER']
+
+# You can uncomment any of the lines below and add your own
+# team selection in case you're in multiple teams
+# team_name "Felix Krause"
+# team_id "Q2CBPJ58CA"

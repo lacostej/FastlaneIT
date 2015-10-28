@@ -1,1 +1,17 @@
 Test fastlane !
+
+Right now the project allows to
+
+* generate some screenshots to be used by spaceship / deliver for upload
+
+  NOTE: this requires image magick
+
+To get started:
+
+1. create a test project on ITC
+
+2. modify the fastlane/.env to contain your user id and project id
+
+3. sh run.sh (the first time, if you haven't entered your Apple credentials, it will ask for them and store them)
+
+If you 

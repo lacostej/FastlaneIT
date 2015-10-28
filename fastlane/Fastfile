@@ -1,0 +1,35 @@
+#update_fastlane
+
+fastlane_version "1.24.5"
+
+default_platform :ios
+
+platform :ios do
+
+  desc "Check setup"
+  lane :check_setup do
+    sh '(cd .. && ruby scripts/test_setup.rb)'
+  end
+
+  desc "Prepares the fixtures"
+  lane :fixtures_init do
+    # prepare the fixtures data
+    Helper.log.info "Generating images"
+    sh 'ruby ../bin/genimages.rb ../fixtures'
+    sh 'ruby ../bin/genmetadata.rb ../fixtures'
+  end
+
+  desc "initialize"
+  lane :meta_upload do
+    fixtures_init
+    deliver(metadata_path: "fixtures/metadata_4",
+            screenshots_path: "fixtures/screenshots_4_6_5",
+            skip_screenshots: true, skip_metadata: false, force: true)
+  end
+
+  lane :test_all do
+    meta_upload
+    sh '(cd .. && ruby scripts/run_all.rb)'
+  end
+
+end

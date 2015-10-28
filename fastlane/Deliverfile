@@ -1,0 +1,27 @@
+app_identifier ENV['BUNDLE_ID']
+username ENV['SPACESHIP_USER']
+
+app_icon 'fastlane/AppIcon.png'
+
+copyright "#{Time.now.year} Fastlane Inc. ;)"
+
+primary_category "Education"
+secondary_category "Games"
+secondary_first_sub_category "Educational"
+secondary_second_sub_category "Puzzle"
+
+price_tier 1
+
+automatic_release false
+
+app_rating_config_path 'fastlane/rating_config.json'
+
+app_review_information ( {
+  first_name: "Foo",
+  last_name: "Bad",
+  phone_number: "+44 844 209 0611",
+  email_address: "webmaster@fastlane.tools",
+  demo_user: "foo@fastlane.tools",
+  demo_password: "bar",
+  notes: File. read('fastlane/review_notes.txt')
+})
