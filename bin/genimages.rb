@@ -5,94 +5,97 @@ require 'fileutils'
 # path='whatever.png'
 # SG.generate_image(path, [100, 120], 'FCFEE8')
 # SG.add_image_caption(path, 'iPad en-US')
-class ScreenshotGenerator 
-	attr_accessor :dimensions
+class ScreenshotGenerator
+  attr_accessor :dimensions
 
-  	def initialize(dimensions)
-    	@dimensions = dimensions
-  	end
+  def initialize(dimensions)
+    @dimensions = dimensions
+  end
 
-	def generate_screenshots(path, prefix, locales, device_types, colors)
-		puts "Generating screenshots under #{path}"
-		locales.each { |locale|
-			dir="#{path}/#{locale}"
-			FileUtils.mkdir_p(dir)
-			device_types.each { |type|
-				index = 0
-				resolution = @dimensions[type]
-				colors.each {|color|
-					r="#{resolution[0]}x#{resolution[1]}"
-					image_path = "#{dir}/#{prefix}_#{type}_#{r}_#{index+1}.jpg"
-					if File.exists? image_path
-						puts "Skipping #{image_path}"
-						next
-					else
-						puts "Generating #{image_path}"
-					end
-					self.generate_image(image_path, resolution, colors[index])
-					self.add_image_caption(image_path, "#{type} #{locale} ##{index + 1}")
+  def generate_screenshots(path, prefix, locales, device_types, colors)
+    puts "Generating screenshots under #{path}"
+    locales.each do |locale|
+      dir = "#{path}/#{locale}"
+      FileUtils.mkdir_p(dir)
+      device_types.each do |type|
+        index = 0
+        resolution = @dimensions[type]
+        colors.each do |color|
+          r = "#{resolution[0]}x#{resolution[1]}"
+          image_path = "#{dir}/#{prefix}_#{type}_#{r}_#{index + 1}.jpg"
+          if File.exist? image_path
+            puts "Skipping #{image_path}"
+            next
+          else
+            puts "Generating #{image_path}"
+          end
+          generate_image(image_path, resolution, colors[index])
+          add_image_caption(image_path, "#{type} #{locale} ##{index + 1}")
 
-					index += 1
-				}
-			}
-		}
-	end
+          index += 1
+        end
+      end
+    end
+  end
 
-	def generate_image(path, resolution, color)
-		r="#{resolution[0]}x#{resolution[1]}"
-		`convert -size #{r} xc:##{color} #{path}`
-	end
+  def generate_image(path, resolution, color)
+    r = "#{resolution[0]}x#{resolution[1]}"
+    `convert -size #{r} xc:##{color} #{path}`
+  end
 
-	def add_image_caption(path, text)
-		width=`identify -format %w #{path}`
-		height=`identify -format %h #{path}`.to_i
-		h=[30, (0.2*height)].max
-  		`convert -background '#0008' -fill white -gravity center -size #{width}x#{h} caption:\" #{text} \" #{path} +swap -gravity south -composite #{path}`
-		#`convert #{path} -pointsize #{pointsize} label:'#{text}' +swap -gravity Center -annotate #{path}`
-	end
+  def add_image_caption(path, text)
+    width = `identify -format %w #{path}`
+    height = `identify -format %h #{path}`.to_i
+    h = [30, (0.2 * height)].max
+    `convert -background '#0008' -fill white -gravity center -size #{width}x#{h} caption:\" #{text} \" #{path} +swap -gravity south -composite #{path}`
+    # `convert #{path} -pointsize #{pointsize} label:'#{text}' 
+    # +swap -gravity Center -annotate #{path}`
+  end
 end
 
+# generate screens given out test configuration
 class Helper
-	class << self; attr_accessor :locales, :colors, :dimensions, :SG; end
+  class << self; attr_accessor :locales, :colors, :dimensions, :sg; end
 
-	@@locales = ['en-US', 'fr-FR', 'es-ES', 'no']
+  @@locales = ['en-US', 'fr-FR', 'es-ES', 'no']
 
-	@@colors = [
-		'FCFEE8',
-		'6D6905',
-		'C8B769',
-		'36B1C0',
-		'ADF4D6'
-		]
+  @@colors = [
+    'FCFEE8',
+    '6D6905',
+    'C8B769',
+    '36B1C0',
+    'ADF4D6'
+  ]
 
-	@@dimensions = {
-		'ipad' => [1536, 2048],
-		'ipadPro' => [2048, 2732],
-		'iphone35' => [640, 960],
-		'iphone4' => [640, 1136],
-		'iphone6' => [750, 1334],
-		'iphone6Plus' => [1242, 2208],
-		'watch' => [312, 390],
-		'mac' => [900, 1440],
-	}
+  @@dimensions = {
+    'ipad' => [1536, 2048],
+    'ipadPro' => [2048, 2732],
+    'iphone35' => [640, 960],
+    'iphone4' => [640, 1136],
+    'iphone6' => [750, 1334],
+    'iphone6Plus' => [1242, 2208],
+    'watch' => [312, 390],
+    'mac' => [900, 1440]
+  }
 
-	@@SG = ScreenshotGenerator.new(@@dimensions)
+  @@sg = ScreenshotGenerator.new(@@dimensions)
 
-	class << self
-		def generate(folder, n_locales, n_types, n_screenshots)
-		  @@SG.generate_screenshots("#{folder}/screenshots_#{n_locales}_#{n_types}_#{n_screenshots}", 'screenshot',
-		  	@@locales[0, n_locales],
-		  	@@dimensions.keys[0, n_types],
-		  	@@colors[0, n_screenshots])
-		end
-	end
+  class << self
+    def generate(folder, n_locales, n_types, n_screenshots)
+      @@sg.generate_screenshots("#{folder}/screenshots_#{n_locales}_#{n_types}_#{n_screenshots}",
+                                'screenshot',
+                                @@locales[0, n_locales],
+                                @@dimensions.keys[0, n_types],
+                                @@colors[0, n_screenshots])
+    end
+  end
 end
 if ARGV.count == 0
-	puts "ERROR: Missing target directory argument"
-	puts "USAGE: #{$0} fixtures_dir"
-	exit -1
+  puts 'ERROR: Missing target directory argument'
+  puts "USAGE: #{$PROGRAM_NAME} fixtures_dir"
+  exit(-1)
 end
-dir=ARGV[0]
+dir = ARGV[0]
 Helper.generate(dir, 1, 1, 1)
 Helper.generate(dir, 1, 6, 5)
 Helper.generate(dir, 4, 6, 5)
