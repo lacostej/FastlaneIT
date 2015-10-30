@@ -1,6 +1,3 @@
-require 'fastlane_core/helper'
-Helper = FastlaneCore::Helper
-
 module FastlaneIT
   module Tunes
     class FindApp
