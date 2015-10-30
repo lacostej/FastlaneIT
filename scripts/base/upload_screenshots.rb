@@ -9,24 +9,50 @@ module FastlaneIT
 
     class UploadScreenshots
       def upload_from(fixtures_dir)
+
+        appv = get_appversion(fixtures_dir)
+
+        Helper.log.info "Found #{appv.screenshots.values.flatten.count} screenshots before upload"
+
+        languages = appv.languages.map{|l| l['language']}
+        if languages[0] != "en-US"
+          Helper.log.error("First language isn't en-US but #{languages[0]}")
+        end
+        screenshots = find_screenshots(fixtures_dir, languages)
+        Helper.log.info "Found #{screenshots.count} screenshots to upload"
+
+        screenshots.each { |s|
+          Helper.log.info "Uploading #{s.sort_order} #{s.device_type} #{s.path}"
+          appv.upload_screenshot!(s.path, s.sort_order, s.language, s.device_type)
+        }
+        save appv
+      end
+
+      def get_appversion(fixtures_dir)
         bundle_id = ENV['BUNDLE_ID']
-        puts "UploadScreenshots #{fixtures_dir} into #{bundle_id}"
+        Helper.log.info "UploadScreenshots #{fixtures_dir} into #{bundle_id}"
 
         app = Spaceship::Tunes::Application.find bundle_id
 
         appv = app.edit_version
+      rescue => ex
+        Helper.log.error  "ERROR: '#{ex.class}'"
+        Helper.log.error  "ERROR: #{ex}"
+        sleep (5)
+        Helper.log.info("Retrying...")
+        retry
+      end
 
-        puts "Found #{appv.screenshots.values.flatten.count} screenshots before upload"
-
-        languages = appv.languages.map{|l| l['language']}
-        screenshots = find_screenshots(fixtures_dir, languages)
-        puts "Found #{screenshots.count} screenshots to upload"
-
-        screenshots.each { |s|
-          puts "Uploading #{s.sort_order} #{s.device_type} #{s.path}"
-          appv.upload_screenshot!(s.path, s.sort_order, s.language, s.device_type)
-        }
+      def save(appv)
+        Helper.log.info "Saving..."
         appv.save!
+      rescue => ex
+        Helper.log.error "FAILED saving... trying to re-read app"
+        Helper.log.error ex
+        bundle_id = ENV['BUNDLE_ID']
+        app = Spaceship::Tunes::Application.find bundle_id
+        Helper.log.info "Found #{app.apple_id}"
+        raise
       end
 
       # here we don't have access to deliver information
