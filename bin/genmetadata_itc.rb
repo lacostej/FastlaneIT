@@ -9,7 +9,7 @@ class MetadataGenerator
 
     locales.each do |locale|
       dir = "#{path}/#{locale}"
-      command = "cp -r #{File.expand_path one_locale} #{File.expand_path dir}"
+      command = "cp -r #{File.expand_path one_locale}/ #{File.expand_path dir}"
       puts command
       `#{command}`
     end
