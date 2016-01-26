@@ -23,7 +23,7 @@ if ARGV.count == 0
 end
 dir = ARGV[0]
 
-locales = ['en-US', 'fr-FR', 'es-ES', 'no']
+locales = ['en-US', 'fr-FR', 'es-ES', 'no-NO']
 MG = MetadataGenerator.new
 MG.generate_metadata("#{dir}/metadata/en-US",
                      "#{dir}/metadata_#{locales.count}",
