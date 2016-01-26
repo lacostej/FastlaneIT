@@ -12,16 +12,6 @@ platform :ios do
     sh '(cd .. && ruby scripts/test_setup.rb)'
   end
 
-  desc "Prepares the fixtures"
-  lane :fixtures_init do
-    Helper.log.info "Generating metadata"
-    # sh 'ruby ../bin/genimages_itc.rb ../fixtures/ios'
-    # sh 'ruby ../bin/genimages_play.rb ../fixtures/android'
-    # sh 'ruby ../bin/genmetadata_itc.rb ../fixtures/ios'
-    # sh 'ruby ../bin/genmetadata_play.rb ../fixtures/android'
-    puts `(cd .. ; unzip -u FastlaneIT_fixtures.zip )`
-  end
-
   desc "Upload metadata [and screenshots] to ITC"
   lane :itc_meta do
     fixtures_init
@@ -34,5 +24,28 @@ platform :ios do
     meta_upload
     sh '(cd .. && ruby scripts/run_all.rb)'
   end
+end
 
+platform :android do
+  desc "Upload metadata [and screenshots] to Play"
+  lane :play_upload do
+    fixtures_init
+    supply(package_name: ENV['PLAY_BUNDLE_ID'],
+           json: ENV['PLAY_JSON_SECRET'],
+           metadata_path: "fixtures/android/metadata_4",
+           skip_upload_apk: true,
+           skip_upload_screenshots: false,
+           skip_upload_images: false,
+           skip_upload_metadata: false)
+  end
+end
+
+desc "Prepares the fixtures"
+lane :fixtures_init do
+  Helper.log.info "Generating metadata"
+  # sh 'ruby ../bin/genimages_itc.rb ../fixtures/ios'
+  # sh 'ruby ../bin/genimages_play.rb ../fixtures/android'
+  # sh 'ruby ../bin/genmetadata_itc.rb ../fixtures/ios'
+  # sh 'ruby ../bin/genmetadata_play.rb ../fixtures/android'
+  puts `(cd .. ; unzip -u FastlaneIT_fixtures.zip; cp -a fixtures/android/screenshots_4_5_5/* fixtures/android/metadata_4/ )`
 end

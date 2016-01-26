@@ -8,7 +8,7 @@ To get started:
 
 1. create a test project on ITC
 
-2. modify the fastlane/.env to contain your user id and project id
+2. modify the fastlane/.env to contain your user id and ITC project id
 
 3. sh run.sh (the first time, if you haven't entered your Apple credentials, it will ask for them and store them)
 
