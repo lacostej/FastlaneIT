@@ -1,6 +1,6 @@
 #update_fastlane
 
-fastlane_version "1.24.5"
+fastlane_version "1.53.0"
 
 default_platform :ios
 
