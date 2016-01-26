@@ -8,6 +8,7 @@ platform :ios do
 
   desc "Check setup"
   lane :check_setup do
+    Helper.log.info "Checking setup"
     sh '(cd .. && ruby scripts/test_setup.rb)'
   end
 
