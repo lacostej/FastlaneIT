@@ -1,4 +1,4 @@
-app_identifier ENV['BUNDLE_ID']
+app_identifier ENV['ITC_BUNDLE_ID']
 username ENV['SPACESHIP_USER']
 
 app_icon 'fastlane/AppIcon.png'

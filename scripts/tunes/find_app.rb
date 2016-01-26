@@ -3,7 +3,7 @@ module FastlaneIT
     class FindApp
       def perform
         puts "FindApp"
-        bundle_id = ENV['BUNDLE_ID']
+        bundle_id = ENV['ITC_BUNDLE_ID']
         app = Spaceship::Tunes::Application.find bundle_id
 
         if app.nil?

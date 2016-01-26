@@ -3,7 +3,7 @@ module FastlaneIT
     class RemoveScreenshots
       def perform
         puts "RemoveScreenshots"
-        bundle_id = ENV['BUNDLE_ID']
+        bundle_id = ENV['ITC_BUNDLE_ID']
         app = Spaceship::Tunes::Application.find bundle_id
 
         appv = app.edit_version

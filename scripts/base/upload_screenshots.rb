@@ -29,7 +29,7 @@ module FastlaneIT
       end
 
       def get_appversion(fixtures_dir)
-        bundle_id = ENV['BUNDLE_ID']
+        bundle_id = ENV['ITC_BUNDLE_ID']
         Helper.log.info "UploadScreenshots #{fixtures_dir} into #{bundle_id}"
 
         app = Spaceship::Tunes::Application.find bundle_id
@@ -49,7 +49,7 @@ module FastlaneIT
       rescue => ex
         Helper.log.error "FAILED saving... trying to re-read app"
         Helper.log.error ex
-        bundle_id = ENV['BUNDLE_ID']
+        bundle_id = ENV['ITC_BUNDLE_ID']
         app = Spaceship::Tunes::Application.find bundle_id
         Helper.log.info "Found #{app.apple_id}"
         raise

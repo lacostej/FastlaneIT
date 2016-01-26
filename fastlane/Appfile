@@ -1,4 +1,4 @@
-app_identifier ENV['BUNDLE_ID']
+app_identifier ENV['ITC_BUNDLE_ID']
 apple_id ENV['SPACESHIP_USER']
 
 # You can uncomment any of the lines below and add your own
