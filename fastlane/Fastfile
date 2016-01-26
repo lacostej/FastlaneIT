@@ -21,8 +21,8 @@ platform :ios do
     sh 'ruby ../bin/genmetadata_itc.rb ../fixtures/ios'
   end
 
-  desc "initialize"
-  lane :meta_upload do
+  desc "Upload metadata [and screenshots] to ITC"
+  lane :itc_meta do
     fixtures_init
     deliver(metadata_path: "fixtures/ios/metadata_4",
             screenshots_path: "fixtures/ios/screenshots_4_6_5",
