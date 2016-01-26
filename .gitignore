@@ -1,4 +1,5 @@
-fixtures/screenshots_*
-fixtures/metadata_*
+fixtures/ios/screenshots_*
+fixtures/android/screenshots_*
+fixtures/ios/metadata_*
 fastlane/report.xml
 fastlane/.env
