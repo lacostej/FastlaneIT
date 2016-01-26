@@ -18,6 +18,7 @@ ruby scripts/run_loop.rb
 
 If you want to change the screenshots have a look at 
 
-   ruby bin/genimages.rb fixtures
+   ruby bin/genimages_itc.rb fixtures/ios
+   ruby bin/genimages_play.rb fixtures/android
 
    (this requires ImageMagick)
