@@ -17,7 +17,7 @@ platform :ios do
     fixtures_init
     deliver(metadata_path: "fixtures/ios/metadata_4",
             screenshots_path: "fixtures/ios/screenshots_4_6_5",
-            skip_screenshots: true, skip_metadata: false, force: true)
+            skip_screenshots: false, skip_metadata: false, force: true)
   end
 
   lane :test_all do
@@ -43,9 +43,11 @@ end
 desc "Prepares the fixtures"
 lane :fixtures_init do
   Helper.log.info "Generating metadata"
-  # sh 'ruby ../bin/genimages_itc.rb ../fixtures/ios'
-  # sh 'ruby ../bin/genimages_play.rb ../fixtures/android'
-  # sh 'ruby ../bin/genmetadata_itc.rb ../fixtures/ios'
-  # sh 'ruby ../bin/genmetadata_play.rb ../fixtures/android'
-  puts `(cd .. ; unzip -u FastlaneIT_fixtures.zip; cp -a fixtures/android/screenshots_4_5_5/* fixtures/android/metadata_4/ )`
+  puts `(cd .. ; sh bin/prepare_fixtures.sh )`
+end
+
+desc "Updates the Fixtures"
+lane :fixtures_update_zip do
+  Helper.log.info "Generating metadata"
+  puts `(cd .. ; sh bin/zip_fixtures.sh )`
 end

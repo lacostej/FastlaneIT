@@ -3,3 +3,4 @@ fixtures/android/screenshots_*
 fixtures/ios/metadata_*
 fastlane/report.xml
 fastlane/.env
+fixtures/android/metadata_4/
