@@ -5,4 +5,4 @@
 rm -f /tmp/spaceship*
 
 #$XXX fastlane test_all
-$XXX fastlane meta_upload && ruby scripts/run_all.rb
+$XXX fastlane itc_meta && ruby scripts/run_all.rb
