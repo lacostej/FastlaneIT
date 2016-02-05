@@ -1,6 +1,6 @@
 Stress / Integration Test for fastlane and ITC / Play Store !
 
-Right now the project allows to stress test deliver / supply on fake projects.
+Right now this project allows to stress test deliver / supply on fake projects.
 
 * set metadata with 4 languages on a projet, remove all screenshots, and upload 1, then 30, then 120 screenshots
 
