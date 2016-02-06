@@ -35,24 +35,11 @@ module FastlaneIT
         app = Spaceship::Tunes::Application.find bundle_id
 
         appv = app.edit_version
-      rescue => ex
-        Helper.log.error  "ERROR: '#{ex.class}'"
-        Helper.log.error  "ERROR: #{ex}"
-        sleep (5)
-        Helper.log.info("Retrying...")
-        retry
       end
 
       def save(appv)
         Helper.log.info "Saving..."
         appv.save!
-      rescue => ex
-        Helper.log.error "FAILED saving... trying to re-read app"
-        Helper.log.error ex
-        bundle_id = ENV['ITC_BUNDLE_ID']
-        app = Spaceship::Tunes::Application.find bundle_id
-        Helper.log.info "Found #{app.apple_id}"
-        raise
       end
 
       # here we don't have access to deliver information
