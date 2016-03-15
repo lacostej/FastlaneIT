@@ -1,3 +1,6 @@
 gem 'dotenv'
 gem 'fastlane'
-#gem 'spaceship'
+git 'https://github.com/lacostej/fastlane.git', :branch => 'wwtk' do
+  gem 'spaceship'
+  gem 'deliver'
+end
