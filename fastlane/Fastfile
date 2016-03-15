@@ -20,6 +20,35 @@ platform :ios do
             skip_screenshots: false, skip_metadata: false, force: true)
   end
 
+  lane :itc_meta_0 do
+    fixtures_init
+    deliver(metadata_path: "fixtures/ios/metadata_4",
+            screenshots_path: "fixtures/ios/screenshots_4_6_0",
+            skip_screenshots: false, skip_metadata: true, force: true)
+  end
+
+  lane :itc_meta_1 do
+    fixtures_init
+    deliver(metadata_path: "fixtures/ios/metadata_4",
+            screenshots_path: "fixtures/ios/screenshots_4_6_1",
+            skip_screenshots: false, skip_metadata: true, force: true)
+  end
+
+  lane :itc_meta_2 do
+    fixtures_init
+    deliver(metadata_path: "fixtures/ios/metadata_4",
+            screenshots_path: "fixtures/ios/screenshots_4_6_3",
+            skip_screenshots: false, skip_metadata: true, force: false)
+  end
+
+  lane :itc_meta_3 do
+    fixtures_init
+    deliver(metadata_path: "fixtures/ios/metadata_4",
+            screenshots_path: "fixtures/ios/screenshots_4_6_5",
+            skip_screenshots: false, skip_metadata: true, force: false)
+  end
+
+
   lane :test_all do
     meta_upload
     sh '(cd .. && ruby scripts/run_all.rb)'
