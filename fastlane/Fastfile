@@ -60,7 +60,20 @@ platform :android do
   lane :play_upload do
     fixtures_init
     supply(package_name: ENV['PLAY_BUNDLE_ID'],
-           json: ENV['PLAY_JSON_SECRET'],
+           json_key_file: ENV['PLAY_JSON_SECRET'],
+           metadata_path: "fixtures/android/metadata_4",
+           skip_upload_apk: true,
+           skip_upload_screenshots: false,
+           skip_upload_images: false,
+           skip_upload_metadata: false)
+  end
+
+  desc "Upload metadata [and screenshots] to Play"
+  lane :play_upload_old do
+    fixtures_init
+    supply(package_name: ENV['PLAY_BUNDLE_ID'],
+           key: ENV['PLAY_P12_KEY'],
+           issuer: ENV['PLAY_ISSUER'],
            metadata_path: "fixtures/android/metadata_4",
            skip_upload_apk: true,
            skip_upload_screenshots: false,
